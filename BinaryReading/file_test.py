@@ -63,6 +63,8 @@ class file_test(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.file_name = file_name = "TEST.bin"
+        self.sync_word2 = sync_word2 = [1 if i in [(32), (34), (27), (29)] else -1 if i in [(33), (35), (28), (30)] else 0 for i in range(64)]
+        self.sync_word1 = sync_word1 = [1 if i in [(32), (33), (28), (27)] else -1 if i in [(34), (35), (30), (29)] else 0 for i in range(64)]
         self.samp_rate = samp_rate = 32000
         self.file_path = file_path = "/home/cci/Desktop/CCI/BinaryReading/" + file_name
 
@@ -166,56 +168,15 @@ class file_test(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_win)
-        self.qtgui_const_sink_x_0 = qtgui.const_sink_c(
-            1024, #size
-            "Transmitted Signal", #name
-            1, #number of inputs
-            None # parent
-        )
-        self.qtgui_const_sink_x_0.set_update_time(0.10)
-        self.qtgui_const_sink_x_0.set_y_axis((-2), 2)
-        self.qtgui_const_sink_x_0.set_x_axis((-2), 2)
-        self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, "")
-        self.qtgui_const_sink_x_0.enable_autoscale(False)
-        self.qtgui_const_sink_x_0.enable_grid(False)
-        self.qtgui_const_sink_x_0.enable_axis_labels(True)
-
-
-        labels = ['', '', '', '', '',
-            '', '', '', '', '']
-        widths = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-        colors = ["blue", "red", "green", "black", "cyan",
-            "magenta", "yellow", "dark red", "dark green", "dark blue"]
-        styles = [0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0]
-        markers = [0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0]
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0, 1.0]
-
-        for i in range(1):
-            if len(labels[i]) == 0:
-                self.qtgui_const_sink_x_0.set_line_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_const_sink_x_0.set_line_label(i, labels[i])
-            self.qtgui_const_sink_x_0.set_line_width(i, widths[i])
-            self.qtgui_const_sink_x_0.set_line_color(i, colors[i])
-            self.qtgui_const_sink_x_0.set_line_style(i, styles[i])
-            self.qtgui_const_sink_x_0.set_line_marker(i, markers[i])
-            self.qtgui_const_sink_x_0.set_line_alpha(i, alphas[i])
-
-        self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.qwidget(), Qt.QWidget)
-        self.top_layout.addWidget(self._qtgui_const_sink_x_0_win)
         self.digital_ofdm_tx_0 = digital.ofdm_tx(
             fft_len=64,
             cp_len=16,
             packet_length_tag_key='packet_len',
-            occupied_carriers=(list(range(-26, -21)) + list(range(-20, -7)) + list(range(-6, 0)) + list(range(1, 7)) + list(range(8, 21)) + list(range(22, 27)),),
-            pilot_carriers=((-21, -7, 7, 21,),),
-            pilot_symbols=((1, 1, 1, -1,),),
-            sync_word1=[0., 0., 0., 0., 0., 0., 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 0., 0., 0., 0., 0.],
-            sync_word2=[0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 1, 1, -1, -1, -1, 1, -1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, 1, -1, 0, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 0, 0, 0, 0, 0] ,
+            occupied_carriers=((-4,-3,-2,-1,1,2,3,4),),
+            pilot_carriers=((-6,-5,5,6),),
+            pilot_symbols=((-1,1,-1,1),),
+            sync_word1=sync_word1,
+            sync_word2=sync_word2,
             bps_header=1,
             bps_payload=2,
             rolloff=0,
@@ -223,13 +184,13 @@ class file_test(gr.top_block, Qt.QWidget):
             scramble_bits=False)
         self.digital_ofdm_rx_0 = digital.ofdm_rx(
             fft_len=64, cp_len=16,
-            frame_length_tag_key='frame_'+"packet_len",
-            packet_length_tag_key="packet_len",
-            occupied_carriers=(list(range(-26, -21)) + list(range(-20, -7)) + list(range(-6, 0)) + list(range(1, 7)) + list(range(8, 21)) + list(range(22, 27)),),
-            pilot_carriers=((-21, -7, 7, 21,),),
-            pilot_symbols=((1, 1, 1, -1,),),
-            sync_word1=[0., 0., 0., 0., 0., 0., 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 0., 0., 0., 0., 0.],
-            sync_word2=[0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 1, 1, -1, -1, -1, 1, -1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, 1, -1, 0, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 0, 0, 0, 0, 0] ,
+            frame_length_tag_key='frame_'+"rx_len",
+            packet_length_tag_key="rx_len",
+            occupied_carriers=((-4,-3,-2,-1,1,2,3,4),),
+            pilot_carriers=((-6,-5,5,6),),
+            pilot_symbols=((-1,1,-1,1),),
+            sync_word1=sync_word1,
+            sync_word2=sync_word2,
             bps_header=1,
             bps_payload=2,
             debug_log=False,
@@ -253,7 +214,6 @@ class file_test(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_throttle2_0, 0), (self.blocks_stream_to_tagged_stream_1, 0))
         self.connect((self.digital_ofdm_rx_0, 0), (self.blocks_char_to_float_0_0, 0))
         self.connect((self.digital_ofdm_tx_0, 0), (self.digital_ofdm_rx_0, 0))
-        self.connect((self.digital_ofdm_tx_0, 0), (self.qtgui_const_sink_x_0, 0))
 
 
     def closeEvent(self, event):
@@ -270,6 +230,18 @@ class file_test(gr.top_block, Qt.QWidget):
     def set_file_name(self, file_name):
         self.file_name = file_name
         self.set_file_path("/home/cci/Desktop/CCI/BinaryReading/" + self.file_name)
+
+    def get_sync_word2(self):
+        return self.sync_word2
+
+    def set_sync_word2(self, sync_word2):
+        self.sync_word2 = sync_word2
+
+    def get_sync_word1(self):
+        return self.sync_word1
+
+    def set_sync_word1(self, sync_word1):
+        self.sync_word1 = sync_word1
 
     def get_samp_rate(self):
         return self.samp_rate

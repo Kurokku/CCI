@@ -69,6 +69,32 @@ blocks:
     coordinate: [160, 8.0]
     rotation: 0
     state: enabled
+- name: sync_word1
+  id: variable
+  parameters:
+    comment: ''
+    value: '[1 if i in [(32), (33), (28), (27)] else -1 if i in [(34), (35), (30),
+      (29)] else 0 for i in range(64)]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [544, 8.0]
+    rotation: 0
+    state: enabled
+- name: sync_word2
+  id: variable
+  parameters:
+    comment: ''
+    value: '[1 if i in [(32), (34), (27), (29)] else -1 if i in [(33), (35), (28),
+      (30)] else 0 for i in range(64)]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 8.0]
+    rotation: 0
+    state: enabled
 - name: blocks_char_to_float_0
   id: blocks_char_to_float
   parameters:
@@ -103,6 +129,24 @@ blocks:
     coordinate: [528, 768.0]
     rotation: 0
     state: enabled
+- name: blocks_file_sink_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/cci/Desktop/CCI/BinaryReading/read_in.jpg
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [536, 936.0]
+    rotation: 0
+    state: disabled
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -199,6 +243,27 @@ blocks:
     coordinate: [280, 232.0]
     rotation: 0
     state: enabled
+- name: channels_channel_model_0
+  id: channels_channel_model
+  parameters:
+    affinity: ''
+    alias: ''
+    block_tags: 'False'
+    comment: ''
+    epsilon: '1.002'
+    freq_offset: '0.63542'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_voltage: '1'
+    seed: '0'
+    taps: 1.0+1j
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [152, 920.0]
+    rotation: 0
+    state: disabled
 - name: digital_ofdm_rx_0
   id: digital_ofdm_rx
   parameters:
@@ -211,28 +276,19 @@ blocks:
     log: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
-    occupied_carriers: (list(range(-26, -21)) + list(range(-20, -7)) + list(range(-6,
-      0)) + list(range(1, 7)) + list(range(8, 21)) + list(range(22, 27)),)
-    packet_len_key: '"packet_len"'
+    occupied_carriers: ((-4,-3,-2,-1,1,2,3,4),)
+    packet_len_key: '"rx_len"'
     payload_mod: '"QPSK"'
-    pilot_carriers: ((-21, -7, 7, 21,),)
-    pilot_symbols: ((1, 1, 1, -1,),)
+    pilot_carriers: ((-6,-5,5,6),)
+    pilot_symbols: ((-1,1,-1,1),)
     scramble_bits: 'False'
-    sync_word1: '[0., 0., 0., 0., 0., 0., 0., 1.41421356, 0., -1.41421356, 0., 1.41421356,
-      0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356,
-      0., 1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356,
-      0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356,
-      0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., -1.41421356,
-      0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 0., 0., 0., 0., 0.]'
-    sync_word2: '[0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 1, 1, -1, -1, -1, 1, -1, 1, 1,
-      1, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, 1, -1, 0, 1, -1, 1, 1, 1, -1, 1, 1,
-      1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 0, 0, 0, 0,
-      0] '
+    sync_word1: sync_word1
+    sync_word2: sync_word2
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 684.0]
+    coordinate: [280, 700.0]
     rotation: 0
     state: enabled
 - name: digital_ofdm_tx_0
@@ -247,24 +303,15 @@ blocks:
     log: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
-    occupied_carriers: (list(range(-26, -21)) + list(range(-20, -7)) + list(range(-6,
-      0)) + list(range(1, 7)) + list(range(8, 21)) + list(range(22, 27)),)
+    occupied_carriers: ((-4,-3,-2,-1,1,2,3,4),)
     packet_len_key: packet_len
     payload_mod: '"QPSK"'
-    pilot_carriers: ((-21, -7, 7, 21,),)
-    pilot_symbols: ((1, 1, 1, -1,),)
+    pilot_carriers: ((-6,-5,5,6),)
+    pilot_symbols: ((-1,1,-1,1),)
     rolloff: '0'
     scramble_bits: 'False'
-    sync_word1: '[0., 0., 0., 0., 0., 0., 0., 1.41421356, 0., -1.41421356, 0., 1.41421356,
-      0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., 1.41421356, 0., -1.41421356,
-      0., 1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356, 0., -1.41421356,
-      0., 1.41421356, 0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356,
-      0., -1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., -1.41421356,
-      0., 1.41421356, 0., 1.41421356, 0., 1.41421356, 0., 0., 0., 0., 0., 0.]'
-    sync_word2: '[0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 1, 1, -1, -1, -1, 1, -1, 1, 1,
-      1, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, 1, -1, 0, 1, -1, 1, 1, 1, -1, 1, 1,
-      1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 0, 0, 0, 0,
-      0] '
+    sync_word1: sync_word1
+    sync_word2: sync_word2
   states:
     bus_sink: false
     bus_source: false
@@ -380,7 +427,7 @@ blocks:
     bus_structure: null
     coordinate: [1056, 360.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0
   id: qtgui_time_sink_x
   parameters:
@@ -572,7 +619,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [672, 752.0]
+    coordinate: [672, 744.0]
     rotation: 0
     state: enabled
 - name: virtual_sink_0
@@ -611,10 +658,13 @@ connections:
 - [blocks_throttle2_0, '0', blocks_char_to_float_0, '0']
 - [blocks_throttle2_0, '0', blocks_stream_to_tagged_stream_0, '0']
 - [blocks_throttle2_0, '0', blocks_stream_to_tagged_stream_1, '0']
+- [channels_channel_model_0, '0', digital_ofdm_rx_0, '0']
 - [digital_ofdm_rx_0, '0', blocks_char_to_float_0_0, '0']
+- [digital_ofdm_rx_0, '0', blocks_file_sink_0, '0']
 - [digital_ofdm_tx_0, '0', qtgui_const_sink_x_0, '0']
 - [digital_ofdm_tx_0, '0', virtual_sink_0, '0']
 - [pdu_tagged_stream_to_pdu_0, pdus, blocks_message_debug_0, print]
+- [virtual_source_0, '0', channels_channel_model_0, '0']
 - [virtual_source_0, '0', digital_ofdm_rx_0, '0']
 
 metadata:
