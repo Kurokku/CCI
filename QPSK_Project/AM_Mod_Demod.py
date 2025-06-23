@@ -62,7 +62,7 @@ class AM_Mod_Demod(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 2**17
+        self.samp_rate = samp_rate = 20000
         self.point_num = point_num = 2**10
         self.const3 = const3 = 1
         self.const2 = const2 = 500
@@ -234,7 +234,7 @@ class AM_Mod_Demod(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
             point_num, #size
             samp_rate, #samp_rate
-            "Modulator", #name
+            "Carrier", #name
             1, #number of inputs
             None # parent
         )
@@ -288,15 +288,15 @@ class AM_Mod_Demod(gr.top_block, Qt.QWidget):
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_ff(const3)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
-        self.analog_sig_source_x_0_0 = analog.sig_source_c(int(samp_rate), analog.GR_TRI_WAVE, 1000, 1, 0, 0)
-        self.analog_sig_source_x_0 = analog.sig_source_c(int(samp_rate), analog.GR_COS_WAVE, 100000, 1, 0, 0)
+        self.analog_sig_source_x_0_0 = analog.sig_source_c(int(samp_rate), analog.GR_TRI_WAVE, 20, 1, 0, 0)
+        self.analog_sig_source_x_0 = analog.sig_source_c(int(samp_rate), analog.GR_COS_WAVE, 1000, 1, 0, 0)
         self.analog_const_source_x_0_0 = analog.sig_source_c(0, analog.GR_CONST_WAVE, 0, 0, const2*10**-3)
         self.analog_const_source_x_0 = analog.sig_source_c(0, analog.GR_CONST_WAVE, 0, 0, const1*10**-3)
         self.analog_am_demod_cf_0 = analog.am_demod_cf(
         	channel_rate=samp_rate,
         	audio_decim=1,
-        	audio_pass=5000,
-        	audio_stop=5500,
+        	audio_pass=10,
+        	audio_stop=50,
         )
 
 
