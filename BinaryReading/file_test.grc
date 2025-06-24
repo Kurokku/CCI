@@ -282,8 +282,8 @@ blocks:
     pilot_carriers: ((-6,-5,5,6),)
     pilot_symbols: ((-1,1,-1,1),)
     scramble_bits: 'False'
-    sync_word1: sync_word1
-    sync_word2: sync_word2
+    sync_word1: None
+    sync_word2: None
   states:
     bus_sink: false
     bus_source: false
@@ -310,8 +310,8 @@ blocks:
     pilot_symbols: ((-1,1,-1,1),)
     rolloff: '0'
     scramble_bits: 'False'
-    sync_word1: sync_word1
-    sync_word2: sync_word2
+    sync_word1: None
+    sync_word2: None
   states:
     bus_sink: false
     bus_source: false

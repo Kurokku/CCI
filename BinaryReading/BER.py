@@ -17,4 +17,4 @@ while True:
         successes += 1
 
 print(iterations)
-print("BER:", successes/iterations * 100, "%")
+print("Correctness:", successes/iterations * 100, "%")
